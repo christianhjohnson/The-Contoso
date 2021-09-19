@@ -2,55 +2,41 @@
 Connect=AzAccount
 
 #Create new resource group
-New-AzResourceGroup -Name TutorialResources -Location eastus
+New-AzResourceGroup -Name TheContosoProject -Location eastus
 
 #Username and password
 $cred = Get-Credential -Message "Enter a username and password for the virtual machine."
+$openports = "3389"
+$DataDiskSizeInGB = "64"
 
-$vmParams = @{
-  ResourceGroupName = 'TutorialResources'
-  Name = 'TutorialVM1'
-  Location = 'eastus'
-  ImageName = 'Win2016Datacenter'
-  PublicIpAddressName = 'tutorialPublicIp'
-  Credential = $cred
-  OpenPorts = 3389
-}
-$newVM1 = New-AzVM @vmParams
+#Create New VM
+New-AzVM -ResourceGroupName TheContosoProject -Name ContosoFS1 -Location eastus -Credential $cred -OpenPorts $openports
 
-#View Results
-$newVM1
+#Add Data disks
+$VirtualMachine = Get-AzVM -ResourceGroupName "TheContosoProject" -Name "ContosoFS1"
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk1" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk2" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk3" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
 
-#Verify Name and admin Account
-$newVM1.OSProfile | Select-Object ComputerName,AdminUserName
-
-#Get specific information about network configuration
-$newVM1 | Get-AzNetworkInterface |
-  Select-Object -ExpandProperty IpConfigurations |
-    Select-Object Name,PrivateIpAddress
+#Get Status
+Get-AzureRmVM -ResourceGroupName "TheContosoProject" -Name "ContosoFS1"
 
 #Connection info via Remote Desktop
-$publicIp = Get-AzPublicIpAddress -Name tutorialPublicIp -ResourceGroupName TutorialResources
-
+$publicIp = Get-AzPublicIpAddress -Name ContosoFS1 -ResourceGroupName TheContosoProject
 $publicIp | Select-Object Name,IpAddress,@{label='FQDN';expression={$_.DnsSettings.Fqdn}}
 
-#Connect via Remote Desktop
-mstsc.exe /v <PUBLIC_IP_ADDRESS>
+#Create additional VM in existing subnet
+New-AzVM -ResourceGroupName TheContosoProject -Name ContosoFS2 -Location eastus -Credential $cred -OpenPorts $openports
 
-#Create Second VM in existing subnet
-$vm2Params = @{
-  ResourceGroupName = 'TutorialResources'
-  Name = 'TutorialVM2'
-  ImageName = 'Win2016Datacenter'
-  VirtualNetworkName = 'TutorialVM1'
-  SubnetName = 'TutorialVM1'
-  PublicIpAddressName = 'tutorialPublicIp2'
-  Credential = $cred
-  OpenPorts = 3389
-}
-$newVM2 = New-AzVM @vm2Params
+#Add Data disks
+$VirtualMachine = Get-AzVM -ResourceGroupName "TheContosoProject" -Name "ContosoFS2"
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk1" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk2" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
+Add-AzVMDataDisk -VM $VirtualMachine -Name "Datadisk3" -LUN 0 -Caching ReadOnly -DiskSizeinGB 5 -CreateOption Empty
 
-$newVM2
+#Get Status of all VM's in Resource Group
+Get-AzureRmVM -ResourceGroupName "TheContosoProject"
 
-#Connect via Remote Desktop
-mstsc.exe /v $newVM2.FullyQualifiedDomainName
+#Connection info via Remote Desktop
+$publicIp = Get-AzPublicIpAddress -Name ContosoFS2 -ResourceGroupName TheContosoProject
+$publicIp | Select-Object Name,IpAddress,@{label='FQDN';expression={$_.DnsSettings.Fqdn}}
