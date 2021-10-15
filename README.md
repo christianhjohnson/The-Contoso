@@ -1,3 +1,3 @@
 # The Contoso
-Building windows server 2016 environment in Azure
+Building a windows server environment and connecting with Azure.
 
