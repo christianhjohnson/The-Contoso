@@ -1,4 +1,4 @@
-$cred = Get-Credential
+$cred = Get-Credential Thecontoso.com\Administrator
 New-PSSession -VMName "CONT-CLU1" -Credential $cred
 Rename-Computer -NewName "CONT-CLU1"
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0

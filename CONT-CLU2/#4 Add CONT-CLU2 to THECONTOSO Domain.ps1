@@ -1,4 +1,5 @@
-#Add CONT-CLU2 to THECONTOSO Domain
-Enter-PSSession -VMName "CONT-CLU2"
+$cred = Get-Credential thecontoso.com\administrator
+New-PSSession -VMName "CONT-CLU2" -Credential $cred
 Add-Computer -DomainName THECONTOSO.COM
 Restart-Computer
+Remove-PSSession
