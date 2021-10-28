@@ -1,0 +1,1 @@
+New-Cluster –Name Clust –Node CONT-CLU1, CONT-CLU2 -StaticAddress 192.168.1.170 –NoStorage

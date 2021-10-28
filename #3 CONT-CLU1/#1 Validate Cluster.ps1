@@ -1,0 +1,1 @@
+Test-Cluster –Node CONT-CLU1, CONT-CLU2 –Include "Storage Spaces Direct", "Inventory", "Network", "System Configuration"

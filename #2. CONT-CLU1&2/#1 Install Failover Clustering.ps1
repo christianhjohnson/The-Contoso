@@ -1,1 +1,1 @@
-Invoke-Command -ComputerName CONT-CLU1, CONT-CLU2 {Install-WindowsFeature -Name Failover-Clustering -IncludeManagementTools}
+Invoke-Command -ComputerName "CONT-CLU1", "CONT-CLU2" {Install-WindowsFeature -Name "Failover-Clustering", "Data-Center-Bridging", "RSAT-Clustering-PowerShell", "FS-FileServer", "DHCP" -IncludeManagementTools}
