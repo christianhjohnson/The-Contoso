@@ -1,0 +1,1 @@
+Start-DscConfiguration -Path C:\Temp\HelloWorld -Verbose -Wait
