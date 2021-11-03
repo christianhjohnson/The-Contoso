@@ -1,5 +1,6 @@
-New-VM -Name "CONT-CLU1" -MemoryStartupBytes 4GB -Generation 2 -NewVHDPath E:\VMs\CONT-CLU1.vhdx -NewVHDSizeBytes 40GB -Switch Extswitch1
-Add-VMDVDDrive -VMName "CONT-CLU1" -Path C:\ISOs\WindowsServer2016.iso
-$DVDDrive = Get-VMDvdDrive "CONT-CLU1"
-$primaryDrive = Get-VMHardDiskDrive -VMName "CONT-CLU1"
-Set-VMFirmware "CONT-CLU1" -BootOrder $primaryDrive, $DVDDrive
+$VMNames = "CONT-CLU1","CONT-CLU2"
+New-VM -Name $VMNames -MemoryStartupBytes 4GB -Generation 2 -NewVHDPath E:\VMs\$VMNames.vhdx -NewVHDSizeBytes 40GB -Switch Extswitch1
+Add-VMDVDDrive -VMName $VMNames -Path C:\ISOs\WindowsServer2016.iso
+$DVDDrive = Get-VMDvdDrive $VMNames
+$primaryDrive = Get-VMHardDiskDrive -VMName $VMNames
+Set-VMFirmware $VMNames -BootOrder $primaryDrive, $DVDDrive
