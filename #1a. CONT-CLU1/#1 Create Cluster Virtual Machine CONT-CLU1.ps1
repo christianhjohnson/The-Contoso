@@ -6,14 +6,11 @@ for ($VMNumber = 1; $VMNumber -lt 3; $VMNumber++)
     $DVDDrive = Get-VMDvdDrive CONT-CLU$VMNumber
     $primaryDrive = Get-VMHardDiskDrive -VMName CONT-CLU$VMNumber
     Set-VMFirmware CONT-CLU$VMNumber -BootOrder $primaryDrive, $DVDDrive
-    New-Item -Path C:\WitnessDisk\CLU$VMNumber -ItemType Directory
-    New-Item -Path F:\WitnessDisk\CLU$VMNumber -ItemType Directory
-    New-Item -Path H:\WitnessDisk\CLU$VMNumber -ItemType Directory
     New-VHD -Path "C:\WitnessDisk\CLU$VMNumber\Witnessdisk.vhdx" -Fixed -SizeBytes 1GB
-    New-VHD -Path "F:\ClusterDisk\CLU$VMNumber\Clusterdisk1.vhdx" -Dynamic -SizeBytes 40GB 
-    New-VHD -Path "H:\ClusterDisk\CLU$VMNumber\Clusterdisk2.vhdx" -Dynamic -SizeBytes 40GB 
+    New-VHD -Path "F:\ClusterDisk1\CLU$VMNumber\Clusterdisk1.vhdx" -Dynamic -SizeBytes 40GB 
+    New-VHD -Path "H:\ClusterDisk2\CLU$VMNumber\Clusterdisk2.vhdx" -Dynamic -SizeBytes 40GB 
     Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "C:\WitnessDisk\CLU$VMNumber\Witnessdisk.vhdx"
-    Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "F:\ClusterDisk\CLU$VMNumber\Clusterdisk1.vhdx"
-    Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "H:\ClusterDisk\CLU$VMNumber\Clusterdisk2.vhdx"
+    Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "F:\ClusterDisk1\CLU$VMNumber\Clusterdisk1.vhdx"
+    Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "H:\ClusterDisk2\CLU$VMNumber\Clusterdisk2.vhdx"
 }
 
