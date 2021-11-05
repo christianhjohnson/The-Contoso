@@ -12,13 +12,13 @@ Invoke-Command -VMName $VMName -Credential $creddom -Scriptblock {
     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
     # Set static IP address after locating correct interface
     $InterIndex = -InterfaceIndex $(Get-NetAdapter | Where-object{$_.Name -like "*Ethernet*" } | Select-Object -ExpandProperty InterfaceIndex)
-    New-NetIPAddress $InterIndex -IPAddress 192.168.1.161 -PrefixLength 24 -DefaultGateway 192.168.1.153
+    New-NetIPAddress -InterfaceIndex = $InterIndex -IPAddress 192.168.1.161 -PrefixLength 24 -DefaultGateway 192.168.1.153
     # Set Network to Private
-    Set-NetConnectionProfile $InterIndex -NetworkCategory Private
+    Set-NetConnectionProfile -InterfaceIndex = $InterIndex -NetworkCategory Private
     # Set file and print sharing
     Enable-NetAdapterBinding -Name "Ethernet" -DisplayName "File and Printer Sharing for Microsoft Networks"
     # Set DNS Settings
-    Set-DnsClientServerAddress $InterIndex -ServerAddresses 192.168.1.153
+    Set-DnsClientServerAddress -InterfaceIndex = $InterIndex -ServerAddresses 192.168.1.153
     #Rename Computer
     Rename-Computer -NewName "CONT-CLU2"
     # Join Computer to Domain

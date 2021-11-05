@@ -1,1 +1,0 @@
-Enable-ClusterStorageSpacesDirect –CimSession "Clust"
