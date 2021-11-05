@@ -18,10 +18,11 @@ Invoke-Command -VMName $VMName -Credential $creddom -Scriptblock {
     Enable-NetAdapterBinding -Name "Ethernet" -DisplayName "File and Printer Sharing for Microsoft Networks"
     # Set DNS Settings
     Set-DnsClientServerAddress -InterfaceIndex $(Get-NetAdapter | Where-object { $_.Name -like "*Ethernet*" } | Select-Object -ExpandProperty InterfaceIndex) -ServerAddresses 192.168.1.153
-    #Rename Computer
-    Rename-Computer -NewName "CONT-CLU2"
+
     # Join Computer to Domain
     $DomCred = Get-Credential thecontoso.com\Administrator
     Add-Computer -DomainName "THECONTOSO.COM" -Credential $DomCred
+    #Rename Computer
+    Rename-Computer -NewName "CONT-CLU2"
     Restart-Computer -Force
     }
