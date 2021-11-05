@@ -3,7 +3,7 @@ for ($VMNumber = 1; $VMNumber -lt 3; $VMNumber++)
     {
     New-VM -Name CONT-CLU$VMNumber -MemoryStartupBytes 4GB -Generation 2 -NewVHDPath F:\VMs\CONT-CLU$VMNumber.vhdx -NewVHDSizeBytes 80GB -Switch InternalSwitch
     #Add Server 2016 ISO
-    Add-VMDVDDrive -VMName CONT-CLU$VMNumber -Path C:\ISOs\WindowsServer2016.iso
+    Add-VMDVDDrive -VMName CONT-CLU$VMNumber -Path C:\ISOs\WindowsServer2019.iso
     Set-VMProcessor CONT-CLU$VMNumber -Count 4 -ExposeVirtualizationExtensions $true
     #Setup Variables for DVD and Primary Drive for Boot Order
     $DVDDrive = Get-VMDvdDrive CONT-CLU$VMNumber
