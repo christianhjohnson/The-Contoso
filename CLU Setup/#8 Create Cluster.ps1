@@ -1,2 +1,5 @@
 $Clusters = "CONT-CLU1","CONT-CLU2"
-New-Cluster –Name "Cluster" –Node $Clusters -StaticAddress 192.168.1.170 –NoStorage
+$Clutername = "Cluster"
+New-Cluster –Name $Clutername –Node $Clusters -StaticAddress 192.168.1.170 –NoStorage -Verbose
+Set-ClusterQuorum -DiskWitness "Witness Disk 1"
+Enable-ClusterS2D -Verbose
