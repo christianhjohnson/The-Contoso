@@ -9,7 +9,6 @@ Invoke-Command ($ServerList) -ScriptBlock {
         $_ | Set-Disk -isoffline:$false
         $_ | Set-Disk -isreadonly:$false
         $_ | Clear-Disk -RemoveData -RemoveOEM -Confirm:$false
-        $_ | Set-Disk -isreadonly:$true
         $_ | Set-Disk -isoffline:$true
     }
     Get-Disk | Where-object Number -Ne $Null | Where-object IsBoot -Ne $True | Where-object IsSystem -Ne $True | Where-object PartitionStyle -Eq RAW | Group-Object -NoElement -Property FriendlyName
