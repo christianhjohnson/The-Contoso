@@ -5,6 +5,6 @@ Issues so far:
 When creating reference images with MDT always mount the ISO's as a DVD on the local computer.  DO NOT try to use the boot USB drive.
 Was using wrong command to send commands to VM's.  Used Enter-PSSession instead of New-PSSession.
 Had a problem pinpointing the correct interface index to setup static IP address, was able to find a variable script to automatically locate the correct interface index for ethernet NIC.
-
-
+Cannot use S2D because my server uses a raid controller, and it can not be disabled unless I perform an crazy configuration to have it boot from a special SD Card.
+Workaround for S2D turns out to be just a regedit.  See https://docs.microsoft.com/en-us/troubleshoot/windows-server/high-availability/enable-support-using-raid-controllers
 

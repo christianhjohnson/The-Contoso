@@ -10,9 +10,9 @@ for ($VMNumber = 1; $VMNumber -lt 3; $VMNumber++)
     $primaryDrive = Get-VMHardDiskDrive -VMName CONT-CLU$VMNumber
     Set-VMFirmware CONT-CLU$VMNumber -BootOrder $primaryDrive, $DVDDrive
     #Create Witness and Data disk for Failover Cluter
-    New-VHD -Path "C:\Clusterdisk0\CLU$VMNumber\Clusterdisk0.vhdx" -Fixed -SizeBytes 40GB
-    New-VHD -Path "D:\ClusterDisk1\CLU$VMNumber\Clusterdisk1.vhdx" -Dynamic -SizeBytes 40GB 
-    New-VHD -Path "E:\ClusterDisk2\CLU$VMNumber\Clusterdisk2.vhdx" -Dynamic -SizeBytes 40GB 
+    New-VHD -Path "C:\Clusterdisk0\CLU$VMNumber\Clusterdisk0.vhdx" -Fixed -SizeBytes 5GB
+    New-VHD -Path "D:\ClusterDisk1\CLU$VMNumber\Clusterdisk1.vhdx" -Dynamic -SizeBytes 10GB 
+    New-VHD -Path "E:\ClusterDisk2\CLU$VMNumber\Clusterdisk2.vhdx" -Dynamic -SizeBytes 10GB 
     # Add disks to VM
     Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "C:\Clusterdisk0\CLU$VMNumber\Clusterdisk0.vhdx"
     Add-VMHardDiskDrive -VMName CONT-CLU$VMNumber -Path "D:\ClusterDisk1\CLU$VMNumber\Clusterdisk1.vhdx"
