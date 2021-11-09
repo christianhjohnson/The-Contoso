@@ -1,0 +1,8 @@
+New-VM -Name CONT-WSUS -MemoryStartupBytes 4GB -Generation 2 -NewVHDPath F:\VMs\CONT-WSUS.vhdx -NewVHDSizeBytes 80GB -Switch InternalSwitch
+    #Add Server 2019 ISO
+    Add-VMDVDDrive -VMName CONT-WSUS -Path C:\ISOs\WindowsServer2019.iso
+    Set-VMProcessor CONT-WSUS -Count 4 -ExposeVirtualizationExtensions $true
+    #Setup Variables for DVD and Primary Drive for Boot Order
+    $DVDDrive = Get-VMDvdDrive CONT-WSUS
+    $primaryDrive = Get-VMHardDiskDrive -VMName CONT-WSUS
+    Set-VMFirmware CONT-WSUS -BootOrder $primaryDrive, $DVDDrive

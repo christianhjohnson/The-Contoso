@@ -1,0 +1,2 @@
+$cred = Get-Credential thecontoso.com\administrator
+Invoke-Command -ComputerName "CONT-WSUS" -Credential $cred -scriptblock { Install-WindowsFeature -Name "UpdateServies" -IncludeManagementTools -Restart }
