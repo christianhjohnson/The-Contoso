@@ -1,0 +1,28 @@
+$WsusServer = “WsusGui”
+# Install the WSUS role on the target WSUS server
+Install-WindowsFeature -ComputerName $WsusServer -Name UpdateServices -IncludeManagementTools -Restart
+
+# Create the directory for WSUS
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { New-Item -Name WSUS -Type Directory -Path C:\ -Force | Out-Null }
+
+# Run the post installation task command to configure WSUS
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { Start-Process -FilePath “C:\Program Files\Update Services\Tools\wsusutil.exe” -ArgumentList “postinstall CONTENT_DIR=C:\WSUS” -Wait -NoNewWindow }
+
+# Enable remote IIS management
+Install-WindowsFeature -ComputerName $WsusServer -Name Web-Mgmt-Service
+
+# Create a firewall exception (if needed) by running the following command in PowerShell
+# !!! Also try this? New-NetFirewallRule -CimSession $WsusServer -Name “IISRemote management” -DisplayName “IISRemote management” -Description “IISRemote management” -Enabled True -Profile Domain -Action Allow -Direction Inbound -Service “WMSVC”
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { Start-Process -FilePath C:\Windows\system32\netsh.exe -ArgumentList ‘advfirewall firewall add rule name=”IIS Remote Management” dir=in action=allow service=WMSVC’ }
+
+# Enable remote IIS management in the registry
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { New-Item -Path “HKLM:\SOFTWARE\Microsoft\WebManagement\Server” -Name Favorites -ItemType Directory -Force | Out-Null }
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { New-ItemProperty -Path “HKLM:\SOFTWARE\Microsoft\WebManagement\Server” -Name “EnableRemoteManagement” -PropertyType DWord -Value “00000001” -Force }
+
+# Configure the Service WMSVC to start automatically and start the service
+Get-Service -ComputerName $WsusServer -Name WMSVC | Set-Service -StartupType Automatic
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { Start-Service -Name WMSVC }
+
+# Set the Private Memory Limit (KB) for the WSUS Application Pool to 0 (zero) and reset IIS
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { Set-WebConfiguration “/system.applicationHost/applicationPools/add[@name=’WsusPool’]/recycling/periodicRestart/@privateMemory” -Value 0 }
+Invoke-Command -ComputerName $WsusServer -ScriptBlock { iisreset }

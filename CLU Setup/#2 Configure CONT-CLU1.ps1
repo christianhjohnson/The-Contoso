@@ -1,7 +1,6 @@
 <# Configure CONT-CLU1 for Remote Desktop
 Set Static IP and DNS
 Domain Join #>
-#Set up variables for Credentials, VMName, Domain Name, then Export Credentials to XML file for use in future scripts
 $creddom = Get-Credential Administrator
 $VMName = "CONT-CLU1"
 #Send commands to CONT-CLU1
