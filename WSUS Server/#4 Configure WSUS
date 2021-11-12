@@ -1,7 +1,5 @@
-$WsusServer = “WsusGui”
-# Install the WSUS role on the target WSUS server
+$WsusServer = “CONT-WSUS”
 Install-WindowsFeature -ComputerName $WsusServer -Name UpdateServices -IncludeManagementTools -Restart
-
 # Create the directory for WSUS
 Invoke-Command -ComputerName $WsusServer -ScriptBlock { New-Item -Name WSUS -Type Directory -Path C:\ -Force | Out-Null }
 
