@@ -1,4 +1,5 @@
 # Prompt for Name, Number of VMs, and how many data disks are required.
+$GBConvert = 1073741824
 $VMName = Read-Host -Prompt "Enter the name for the VMs"
 $VMmax = Read-Host -Prompt "Enter the number of VMs to create (1-10000)"
 $PrimaryDisk = Read-Host -Prompt "Enter the Drive Letter for the VM Disk (Example C:)"
