@@ -1,8 +1,7 @@
 <# Super VM Creation Script
 This scripts assumes that the server 2016, 2019 and lubuntu ISO's are located 
 In the C:\ISO\ folder and are named:
-WindowsServer2016 or WindowsServer2016 or Lubuntu
-#>
+WindowsServer2016 or WindowsServer2016 or Lubuntu #>
 # GB Convert is used to convert the input from bytes to GB in question for size of drive
 $GBConvert = 1073741824
 # Ask for name of VM(s)
@@ -22,7 +21,6 @@ $PrimaryDisk = Read-Host -Prompt "Enter the Drive Letter for the VM Disk (Exampl
 $OS = Read-Host -Prompt "Enter 1 for Server 2016 OS, 2 for Server 2019 OS, 3 for Lubuntu OS"
 # Asks the number of datadisks per VM then which sets up a series of if-then statements below
 $Datadisknumber = Read-Host -Prompt "Enter the Number of Datadisks (Up to 4)"
-
 # Sets up if commands to create the number of data disks, and ask for location of each disk.
 if ($DatadiskNumber -ge 1){
     $1stDataDiskPath = Read-Host -Prompt "Enter the Drive Letter for the 1st Datadisk (Example C:)"
@@ -42,10 +40,10 @@ if ($Datadisknumber -ne 0){
     [Int64]$DatadisksizeGB = $Datadisksize * $GBConvert
     }
 $NumberofCores = Read-Host -Prompt "Enter the Number of Cores for each VM"
-# Prompt for Switch Name
+# Displays switch names
 $VMSwitches = Get-VMSwitch | Format-List "Name","SwitchType"
 Write-Output $VMSwitches
-# Write-Host = "The following VMSwitches are available:" $VMSwitches
+# Asks for name of switch
 $Switch = Read-Host -Prompt "Enter the Name of the Switch for the VM"
 # Determines if Switch is Valid, if not prompts for switch creation
 $AvailableSwitch = Get-VMSwitch
@@ -61,6 +59,7 @@ if ( $NewSwitch -contains "Y" ){
     if ( $SwitchType -eq 2 ){
         New-VMSwitch -name $Switch -SwitchType Internal
         }
+# External Switch setup has more features and must match to a current physical NIC
     if ( $SwitchType -eq 3){
         $NIC = Get-NetAdapter -Physical | Select-Object Name,InterfaceDescription | Format-List -Property "Name","Interface Description"
         Write-Output "Here is a list of the NIC's available:" $NIC
@@ -76,13 +75,13 @@ if ( $NewSwitch -contains "N"){
 # Create the number of VMs
 for ($VMNumber = 1; $VMNumber -le $VMmax; $VMNumber++)
     {
-        #Create VM's
+# Create VM's
         Try { New-VM -Name $VMNAME$VMNumber -Generation $Generation -NewVHDPath $PrimaryDisk\VMs\$VMNAME$VMNumber.vhdx -NewVHDSizeBytes $VMDrivesizeGB -Switch $Switch 
         }
         catch 
         { Write-Output "Switch name not recognized, please check name and re-run script"
         }
-        # Configure VM operating systems according to previous question
+# Configure VM operating systems according to previous question
         if ($OS -eq 1){
             Add-VMDVDDrive -VMName $VMNAME$VMNumber -Path C:\ISOs\WindowsServer2016.iso
             }
@@ -92,16 +91,16 @@ for ($VMNumber = 1; $VMNumber -le $VMmax; $VMNumber++)
         if ($OS -eq 3){
             Add-VMDVDDrive -VMName $VMNAME$VMNumber -Path C:\ISOs\Lubuntu.iso
             }
+# Sets the number of VM processors
         Set-VMProcessor $VMNAME$VMNumber -Count $NumberofCores -ExposeVirtualizationExtensions $true
-        #Setup Variables for DVD and Primary Drive for Boot Order only if Gen 2
+# Setup Variables for DVD and Primary Drive for Boot Order only if Gen 2
         if ($Generation -eq 2){
             $DVDDrive = Get-VMDvdDrive $VMNAME$VMNumber
             $primaryDrive = Get-VMHardDiskDrive -VMName $VMNAME$VMNumber -ControllerLocation 0
             Set-VMFirmware $VMNAME$VMNumber -BootOrder $primaryDrive, $DVDDrive
             }
-        # no longer needed Set-VM $VMNAME$VMNumber -DynamicMemory -MemoryMinimumBytes $MinMemorySizeMB -MemoryMaximumBytes $MaxMemoryMB -MemoryStartupBytes -$StartupMemoryMB 
         Set-VMMemory $VMNAME$VMNumber -DynamicMemoryEnabled $true
-    #Create Datadisks according to the number needed.
+# Create Datadisks according to the number needed.
     if ($Datadisknumber -ge 1)
             {
             New-VHD -Path "$1stDataDiskPath\VMDataDisks\$VMNAME$VMNumber\Datadisk1.vhdx" -Dynamic -SizeBytes $DatadisksizeGB
