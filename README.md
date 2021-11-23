@@ -11,3 +11,4 @@ Cannot use S2D because my server uses a raid controller, and it can not be disab
 Workaround for S2D turns out to be just a regedit.  See https://docs.microsoft.com/en-us/troubleshoot/windows-server/high-availability/enable-support-using-raid-controllers
 Regedit didn't work for my server becuase of the hardware setup.
 
+Re-installed Server 2019 and used Azure Active Directory and sync with Azure AD Connect
