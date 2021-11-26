@@ -1,0 +1,3 @@
+Install-WindowsFeature RemoteAccess
+Install-WindowsFeature DirectAccess-VPN -IncludeManagementTools
+Install-WindowsFeature Routing -IncludeManagementTools
