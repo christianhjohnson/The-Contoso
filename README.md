@@ -12,3 +12,5 @@ Workaround for S2D turns out to be just a regedit.  See https://docs.microsoft.c
 Regedit didn't work for my server becuase of the hardware setup.
 
 Re-installed Server 2019 and used Azure Active Directory and sync with Azure AD Connect
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.storage%2Fstorage-account-create%2Fazuredeploy.json)
