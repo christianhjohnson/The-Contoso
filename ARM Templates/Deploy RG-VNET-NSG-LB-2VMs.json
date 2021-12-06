@@ -28,7 +28,7 @@
         "properties": {
             "publicIPAllocationMethod": "Dynamic",
             "dnsSettings": {
-                "domainNameLabel": "[toLower('WEBVM1')]"
+                "domainNameLabel": "[toLower('CONTOSOWEBVM1PublicIPAddress')]"
             }
         }
     },
