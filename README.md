@@ -18,6 +18,6 @@ My First Deployment ARM
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.https%3A%2F%2Fgithub.com%2Fchristianhjohnson%2FThe-Contoso%2Fblob%2Fmain%2FARM%2520Templates%2FDeploy%2520RG-VNET-NSG-LB-2VMs.json">
     <img src="http://azuredeploy.net/deploybutton.png"/>
-</a><a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/DarylsCorner/ARM-Templates/master/vm-from-user-image/azuredeploy.json" target="_blank">
+</a><a href="http://armviz.io/#/?load=https%3A%2F%2Fgithub.com%2Fchristianhjohnson%2FThe-Contoso%2Fblob%2Fmain%2FARM%2520Templates%2FDeploy%2520RG-VNET-NSG-LB-2VMs.json" target="_blank">
   <img src="http://armviz.io/visualizebutton.png"/>
 </a>
