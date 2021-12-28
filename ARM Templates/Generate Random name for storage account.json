@@ -4,15 +4,17 @@
     "parameters": {},
     "functions": [],
     "variables": {},
-    "resources": [
-        {
+    "resources": [{
+            "name": "[concat('storage',uniqueString(resourceGroup().id))]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-04-01",
             "location": "[resourceGroup().location]",
-            "name": "[concat('storage',uniqueString(resourceGroup().id))]",
+            "tags": {
+                "displayName": "[concat('storage',uniqueString(resourceGroup().id))]"
+                    },
             "sku": {
                 "name": "Standard_LRS"
-            },
+                    },
             "kind": "StorageV2"
         }
     ],
