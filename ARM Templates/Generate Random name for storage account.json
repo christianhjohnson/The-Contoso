@@ -4,16 +4,17 @@
     "parameters": {},
     "functions": [],
     "variables": {},
-    "resources": [{
-        "name": "[concat('storage',uniqueString(resourceGroup().id))]",
-        "type": "Microsoft.Storage/storageAccounts",
-        "apiVersion": "2021-04-01",
-        "location": "[resourceGroup().location]",
-        "kind": "StorageV2",
-        "sku": {
-            "name": "Premium_LRS",
-            "tier": "Premium"
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2021-04-01",
+            "location": "[resourceGroup().location]",
+            "name": "[concat('storage',uniqueString(resourceGroup().id))]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "StorageV2"
         }
-    }],
+    ],
     "outputs": {}
 }
