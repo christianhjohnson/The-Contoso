@@ -8,9 +8,6 @@
         "name": "[concat('storage',uniqueString(resourceGroup().id))]",
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2021-04-01",
-        "tags": {
-            "displayName": "[concat('storage',uniqueString(resourceGroup().id))]"
-        },
         "location": "[resourceGroup().location]",
         "kind": "StorageV2",
         "sku": {
