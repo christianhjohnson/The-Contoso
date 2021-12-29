@@ -1,5 +1,5 @@
 Markdown button prefix:
-![Deploy to Azure](https://aka.ms/deploytoazurebutton)
+![Deploy to Azure](https://aka.ms/deploytoazurebutton)(https://portal.azure.com/#create/Microsoft.Template/uri/<URI Output from PowerShell>)
 
 Command to convert URL to URL-encoded value PowerShell
 $url = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
