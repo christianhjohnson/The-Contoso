@@ -1,4 +1,4 @@
-$rg + 'armtest-01'
+$rg = 'armtest-01'
 New-AzResourceGroup -Name $rg -Location westus -Force
 
 New-AzResourceGroupDeployment `
