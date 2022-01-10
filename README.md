@@ -1,5 +1,5 @@
 # The Contoso
-This repo started during my Microsoft Software and Systems Academy course as a hands-on learning tool.  I continue to use it as a learning tool, expanding further into ARM templates and documenting my code and growth.
+This repo started during my Microsoft Software and Systems Academy course as a hands-on learning tool.  I continue to use it as a learning tool, expanding further into ARM templates and documenting my code and growth.  It has been an evolving process.
 
 https://thecontoso.com
 
