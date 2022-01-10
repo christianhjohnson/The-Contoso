@@ -1,4 +1,3 @@
-#Happy 2022, may it be the best year yet!!!!!!!!!!
 <# Super VM Creation Script and learning tool#>
 # $error[0].exception.gettype().fullname - Command to find error
 # GB Convert is used to convert the input from bytes to GB in question for size of drive
